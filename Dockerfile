@@ -12,7 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the app.
 COPY . .
 
-# uvicorn binds 0.0.0.0:8000 — Railway/cloud proxies expose this port.
+# uvicorn binds 0.0.0.0 on the port provided by the platform ($PORT).
+# Railway/Render/Fly all inject a PORT env var; fall back to 8000 locally.
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
