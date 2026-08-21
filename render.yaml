@@ -1,0 +1,11 @@
+# Render.com deploy config (Web Service)
+services:
+  - type: web
+    name: dftiktok
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: DFTIKTOK_RATE_LIMIT
+        value: 60
