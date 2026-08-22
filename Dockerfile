@@ -13,7 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # uvicorn binds 0.0.0.0 on the port provided by the platform ($PORT).
-# Railway/Render/Fly all inject a PORT env var; fall back to 8000 locally.
+# Railway/Render/Fly inject a PORT env var; fall back to 8000 locally.
+# --proxy-headers + --forwarded-allow-ips let us see the real client IP
+# (needed for /api/whoami and the per-IP rate limiter) behind the proxy.
 EXPOSE 8000
 
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips=\"*\""]
