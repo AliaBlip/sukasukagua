@@ -1,7 +1,7 @@
 # DFTIKTOK — production image
 # Base image already ships Chromium + all its system dependencies,
 # so the built-in search scraper (scraper.py) works out of the box.
-FROM mcr.microsoft.com/playwright/python:v1.44.0-jammy
+FROM mcr.microsoft.com/playwright/python:v1.62.0-jammy
 
 WORKDIR /app
 
